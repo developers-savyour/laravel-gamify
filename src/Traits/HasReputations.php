@@ -1,6 +1,6 @@
 <?php
 
-namespace QCod\Gamify;
+namespace QCod\Gamify\Traits;
 
 use QCod\Gamify\Events\ReputationChanged;
 

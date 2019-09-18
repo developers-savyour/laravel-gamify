@@ -14,7 +14,9 @@ class AddReputationFieldOnUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('reputation')->default(0)->after('remember_token');
+            $table->unsignedInteger('reputation')->default(0)->before('updated_at');
+            $table->integer('badge_id')->after('id')->nullable();
+            $table->integer('level_id')->after('id')->nullable();
         });
     }
 
@@ -27,6 +29,8 @@ class AddReputationFieldOnUserTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('reputation');
+            $table->removeColumn('badge_id');
+            $table->removeColumn('level_id');
         });
     }
 }

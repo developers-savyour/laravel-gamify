@@ -1,12 +1,12 @@
 <?php
 
-namespace QCod\Gamify;
+namespace QCod\Gamify\Classes;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BadgeType
+abstract class LevelType
 {
     /**
      * @var Model
@@ -18,7 +18,7 @@ abstract class BadgeType
      */
     public function __construct()
     {
-        $this->model = $this->storeBadge();
+        $this->model = $this->storeLevel();
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class BadgeType
     {
         return property_exists($this, 'name')
             ? $this->name
-            : $this->getDefaultBadgeName();
+            : $this->getDefaultLevelName();
     }
 
     /**
@@ -70,21 +70,15 @@ abstract class BadgeType
      *
      * @return int
      */
-    public function getLevel()
+    public function getBadge()
     {
-        $level = property_exists($this, 'level')
-            ? $this->level
-            : config('gamify.badge_default_level', 1);
+        $badge = property_exists($this, 'badge')
+            ? $this->badge
+            : config('gamify.level_default_badge', 1);
 
-        if (is_numeric($level)) {
-            return $level;
+        if (is_numeric($badge)) {
+            return $badge;
         }
-
-        return Arr::get(
-            config('gamify.badge_levels', []),
-            $level,
-            config('gamify.badge_default_level', 1)
-        );
     }
 
     /**
@@ -92,7 +86,7 @@ abstract class BadgeType
      *
      * @return mixed
      */
-    public function getBadgeId()
+    public function getLevelId()
     {
         return $this->model->getKey();
     }
@@ -102,7 +96,7 @@ abstract class BadgeType
      *
      * @return string
      */
-    protected function getDefaultBadgeName()
+    protected function getDefaultLevelName()
     {
         return ucwords(Str::snake(class_basename($this), ' '));
     }
@@ -127,18 +121,18 @@ abstract class BadgeType
      *
      * @return mixed
      */
-    protected function storeBadge()
+    protected function storeLevel()
     {
-        $badge = app(config('gamify.badge_model'))
+        $level = app(config('gamify.level_model'))
             ->firstOrNew(['name' => $this->getName()])
             ->forceFill([
-                'level' => $this->getLevel(),
+                'badge_id' => $this->getBadge(),
                 'description' => $this->getDescription(),
                 'icon' => $this->getIcon()
             ]);
 
-        $badge->save();
+        $level->save();
 
-        return $badge;
+        return $level;
     }
 }

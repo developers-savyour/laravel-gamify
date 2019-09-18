@@ -6,12 +6,11 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class ReputationChanged implements ShouldBroadcast
 {
-    use Dispatchable, SerializesModels;
+    use SerializesModels;
 
     /**
      * @var Model

@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use QCod\Gamify\LevelType;
+
+class DummyClass extends LevelType
+{
+    /**
+     * Description for Level
+     *
+     * @var string
+     */
+    protected $description = '';
+
+    /**
+     * Check is user qualifies for level
+     *
+     * @param $user
+     * @return bool
+     */
+    public function qualifier($user)
+    {
+        return $user->getPoints() >= getLevelQualifier('DummyClass');
+
+    }
+
+    public function getBadge()
+    {
+        return getBadgeIdByName(config('gamify.badges.1'));
+    }
+}

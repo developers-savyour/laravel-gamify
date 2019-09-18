@@ -1,24 +1,52 @@
 <?php
 
-use QCod\Gamify\PointType;
+use App\Models\Badge;
+use App\Models\ReputationPoint;
+use QCod\Gamify\Classes\PointType;
+use QCod\Gamify\Models\LevelQualifier;
+
+
+if ( ! function_exists('getBadgeIdByName')) {
+    function getBadgeIdByName($name)
+    {
+        $badge  =   Badge::where('name', $name)->active()->first();
+
+        return (!empty($badge))    ?   $badge->id  :   config('badge_default_level');
+    }
+}
+
 
 if (!function_exists('givePoint')) {
 
     /**
      * Give point to user
      *
-     * @param PointType $pointType
-     * @param null $payee
+     * @param $pointType
+     * @param User $user
+     * @param string $payee
+     * @param string $action
      */
-    function givePoint(PointType $pointType, $payee = null)
+    // $pointtype is Class of any class inherited with PointType class
+    // $subject is the class on which the action is performed
+    // $user is type of User
+    // $payee is the name of relation between subject and user e.g: post and user // post is subject and user is payee
+    // $action is name of action to get the reputation point from DB
+    function givePoint($pointType, $user, string $payee, string $action)
     {
-        $payee = $payee ?? auth()->user();
-
-        if (!$payee) {
-            return;
+        $reputationPoint    =   ReputationPoint::active()->where('action', $action)->first();
+        if($reputationPoint)
+        {
+            $pointType   =   new $pointType($user, $reputationPoint->points, $payee);
+            $user->givePoint($pointType);
         }
+    }
+}
 
-        $payee->givePoint($pointType);
+if (!function_exists('getLevelQualifier')) {
+    function getLevelQualifier($className)
+    {
+        $qualifier  =   LevelQualifier::where('class_name',$className)->first();
+        $qualifier  =   !empty($qualifier) ? $qualifier->qualifying_points : 5000000;
     }
 }
 

@@ -46,6 +46,6 @@ class MakePointCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Gamify\Points';
+        return $rootNamespace.'\Classes\Gamify\Points';
     }
 }

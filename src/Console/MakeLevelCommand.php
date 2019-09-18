@@ -3,15 +3,16 @@
 namespace QCod\Gamify\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Facades\Cache;
 
-class MakeBadgeCommand extends GeneratorCommand
+class MakeLevelCommand extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'gamify:badge {name}';
+    protected $signature = 'gamify:level {name}';
 
     /**
      * The console command description.
@@ -25,7 +26,7 @@ class MakeBadgeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'Badge';
+    protected $type = 'Level';
 
     /**
      * Get the stub file for the generator.
@@ -34,7 +35,7 @@ class MakeBadgeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/badge.stub';
+        return __DIR__.'/stubs/level.stub';
     }
 
     /**
@@ -46,7 +47,7 @@ class MakeBadgeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Gamify\Badges';
+        return $rootNamespace.'\Classes\Gamify\Levels';
     }
 
     /**
@@ -58,7 +59,7 @@ class MakeBadgeCommand extends GeneratorCommand
     public function handle()
     {
         // clear the cache for badges
-        cache()->forget('gamify.badges.all');
+        Cache::forget('gamify.level.all');
 
         return parent::handle();
     }

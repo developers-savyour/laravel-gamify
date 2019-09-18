@@ -1,10 +1,10 @@
 <?php
 
-namespace QCod\Gamify;
+namespace QCod\Gamify\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Badge extends Model
+class Level extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
@@ -13,8 +13,13 @@ class Badge extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(config('gamify.payee_model'), 'user_badges')
+        return $this->belongsToMany(config('gamify.payee_model'), 'user_levels')
             ->withTimestamps();
+    }
+
+    public function badge()
+    {
+        return $this->belongsTo(Badge::class,'badge_id');
     }
 
     /**
@@ -35,5 +40,10 @@ class Badge extends Model
     public function removeFrom($user)
     {
         $this->users()->detach($user);
+    }
+
+    public function getIconAttribute($value)
+    {
+        return config('app.app_url'). $value;
     }
 }

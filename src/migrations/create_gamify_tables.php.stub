@@ -13,35 +13,56 @@ class CreateGamifyTables extends Migration
      */
     public function up()
     {
-        // reputations table
-        Schema::create('reputations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->mediumInteger('point', false)->default(0);
-            $table->integer('subject_id')->nullable();
-            $table->string('subject_type')->nullable();
-            $table->unsignedInteger('payee_id')->nullable();
-            $table->text('meta')->nullable();
-            $table->timestamps();
-        });
+               Schema::create('badges', function (Blueprint $table) {
+                   $table->bigIncrements('id');
+                   $table->string('name');
+                   $table->text('icon')->nullable();
+                   $table->boolean('is_active')->default(0);
+                   $table->timestamps();
+               });
 
-        // badges table
-        Schema::create('badges', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('icon')->nullable();
-            $table->tinyInteger('level')->default(config('gamify.badge_default_level', 1));
-            $table->timestamps();
-        });
+               // reputations table
+               Schema::create('reputations', function (Blueprint $table) {
+                   $table->increments('id');
+                   $table->string('name');
+                   $table->mediumInteger('point', false)->default(0);
+                   $table->integer('subject_id')->nullable();
+                   $table->string('subject_type')->nullable();
+                   $table->unsignedInteger('payee_id')->nullable();
+                   $table->text('meta')->nullable();
+                   $table->timestamps();
+               });
 
-        // user_badges pivot
-        Schema::create('user_badges', function (Blueprint $table) {
-            $table->primary(['user_id', 'badge_id']);
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('badge_id');
-            $table->timestamps();
-        });
+               // badges table
+               Schema::create('levels', function (Blueprint $table) {
+                   $table->increments('id');
+                   $table->string('name');
+                   $table->string('description')->nullable();
+                   $table->string('icon')->nullable();
+                   $table->tinyInteger('badge_id')->default(0);
+                   $table->timestamps();
+               });
+
+               // user_badges pivot
+               Schema::create('user_levels', function (Blueprint $table) {
+                   $table->primary(['user_id', 'level_id']);
+                   $table->unsignedInteger('user_id');
+                   $table->unsignedInteger('level_id');
+                   $table->timestamps();
+               });
+               Schema::create('reputation_points', function (Blueprint $table) {
+                    $table->bigIncrements('id');
+                    $table->string('action');
+                    $table->integer('points')->default(0);
+                    $table->boolean('is_active')->default(0);
+                    $table->timestamps();
+               });
+               Schema::create('level_qualifiers', function (Blueprint $table) {
+                    $table->bigIncrements('id');
+                    $table->string('class_name');
+                    $table->bigInteger('qualifying_points')->default('5000000');
+                    $table->timestamps();
+               });
     }
 
     /**
@@ -51,8 +72,11 @@ class CreateGamifyTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_badges');
+        Schema::dropIfExists('user_levels');
         Schema::dropIfExists('badges');
         Schema::dropIfExists('reputations');
+        Schema::dropIfExists('levels');
+        Schema::dropIfExists('reputation_points');
+        Schema::dropIfExists('level_qualifiers');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace QCod\Gamify;
+namespace QCod\Gamify\Classes;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;

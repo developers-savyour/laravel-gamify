@@ -4,9 +4,9 @@ namespace QCod\Gamify;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
-use QCod\Gamify\Listeners\SyncBadges;
+use QCod\Gamify\Listeners\SyncLevels;
 use Illuminate\Support\ServiceProvider;
-use QCod\Gamify\Console\MakeBadgeCommand;
+use QCod\Gamify\Console\MakeLevelCommand;
 use QCod\Gamify\Console\MakePointCommand;
 use QCod\Gamify\Events\ReputationChanged;
 
@@ -39,12 +39,12 @@ class GamifyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakePointCommand::class,
-                MakeBadgeCommand::class,
+                MakeLevelCommand::class
             ]);
         }
 
         // register event listener
-        Event::listen(ReputationChanged::class, SyncBadges::class);
+        Event::listen(ReputationChanged::class, SyncLevels::class);
     }
 
     /**
@@ -54,10 +54,10 @@ class GamifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('badges', function () {
-            return cache()->rememberForever('gamify.badges.all', function () {
-                return $this->getBadges()->map(function ($badge) {
-                    return new $badge;
+        $this->app->singleton('levels', function () {
+            return Cache::rememberForever('gamify.levels.all', function () {
+                return $this->getLevels()->map(function ($level) {
+                    return new $level;
                 });
             });
         });
@@ -68,21 +68,21 @@ class GamifyServiceProvider extends ServiceProvider
      *
      * @return Collection
      */
-    protected function getBadges()
+    protected function getLevels()
     {
         $badgeRootNamespace = config(
-            'gamify.badge_namespace',
-            $this->app->getNamespace() . 'Gamify\Badges'
+            'gamify.level_namespace',
+            $this->app->getNamespace() . 'Classes\Gamify\Levels'
         );
 
-        $badges = [];
+        $levels = [];
 
-        foreach (glob(app_path('/Gamify/Badges/') . '*.php') as $file) {
+        foreach (glob(app()->path() . '/Classes/Gamify/Levels/*.php') as $file) {
             if (is_file($file)) {
-                $badges[] = app($badgeRootNamespace . '\\' . pathinfo($file, PATHINFO_FILENAME));
+                $levels[] = app($badgeRootNamespace . '\\' . pathinfo($file, PATHINFO_FILENAME));
             }
         }
 
-        return collect($badges);
+        return collect($levels);
     }
 }
