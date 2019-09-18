@@ -3,6 +3,7 @@
 namespace QCod\Gamify\Traits;
 
 use QCod\Gamify\Events\ReputationChanged;
+use Illuminate\Support\Facades\Event;
 
 trait HasReputations
 {
@@ -77,7 +78,7 @@ trait HasReputations
     {
         $this->increment($this->getReputationField(), $point);
 
-        ReputationChanged::dispatch($this, $point, true);
+        Event::dispatch(new ReputationChanged($this, $point, true));
 
         return $this;
     }
@@ -91,8 +92,8 @@ trait HasReputations
     public function reducePoint($point = 1)
     {
         $this->decrement($this->getReputationField(), $point);
+        Event::dispatch(new ReputationChanged($this, $point, true));
 
-        ReputationChanged::dispatch($this, $point, false);
 
         return $this;
     }
@@ -105,8 +106,7 @@ trait HasReputations
     public function resetPoint()
     {
         $this->forceFill([$this->getReputationField() => 0])->save();
-
-        ReputationChanged::dispatch($this, 0, false);
+        Event::dispatch($this, 0, false);
 
         return $this;
     }

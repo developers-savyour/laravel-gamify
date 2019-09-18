@@ -4,5 +4,5 @@ namespace QCod\Gamify\Traits;
 
 trait Gamify
 {
-    use HasReputations, HasBadges;
+    use HasReputations, HasLevels;
 }
