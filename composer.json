@@ -1,5 +1,5 @@
 {
-  "name": "developer-savyour/qcod/laravel-gamify",
+  "name": "developer-savyour/laravel-gamify",
   "description": "Add gamification in laravel app with reputation point and badges support",
   "homepage": "https://github.com/qcod/laravel-gamify",
   "type": "library",
