@@ -3,6 +3,7 @@
 namespace QCod\Gamify;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use QCod\Gamify\Console\MakeLevelCommand;
