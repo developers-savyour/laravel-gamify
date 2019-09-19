@@ -5,6 +5,7 @@ namespace QCod\Gamify\Classes;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use QCod\Gamify\Models\Level;
 
 abstract class LevelType
 {
@@ -123,7 +124,7 @@ abstract class LevelType
      */
     protected function storeLevel()
     {
-        $level = app(config('gamify.level_model'))
+        $level = app(Level::class)
             ->firstOrNew(['name' => $this->getName()])
             ->forceFill([
                 'badge_id' => $this->getBadge(),

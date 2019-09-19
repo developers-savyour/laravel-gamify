@@ -2,7 +2,6 @@
 
 namespace QCod\Gamify\Models;
 
-use App\Models\Level;
 use Illuminate\Database\Eloquent\Model;
 
 class Badge extends Model

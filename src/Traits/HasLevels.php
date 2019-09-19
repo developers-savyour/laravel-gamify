@@ -2,6 +2,8 @@
 
 namespace QCod\Gamify\Traits;
 
+use QCod\Gamify\Models\Level;
+
 trait HasLevels
 {
     /**
@@ -11,7 +13,7 @@ trait HasLevels
      */
     public function levels()
     {
-        return $this->belongsToMany(config('gamify.level_model'), 'user_levels')
+        return $this->belongsToMany(Level::class, 'user_levels')
             ->withTimestamps();
     }
 

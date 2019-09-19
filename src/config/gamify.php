@@ -4,8 +4,6 @@ return [
     // Model which will be having points, generally it will be User
     'payee_model' => '\App\User\User',
 
-    // Reputation model
-    'reputation_model' => 'App\Models\Reputation',
 
     // Allow duplicate reputation points
     'allow_reputation_duplicate' => true,
@@ -16,8 +14,7 @@ return [
     // Channel name prefix, user id will be suffixed
     'channel_name' => 'user.reputation.',
 
-    // Badge model
-    'level_model' => 'App\Models\Level',
+
 
     // Where all badges icon stored
     'level_icon_folder' => 'images/badges/',

@@ -5,6 +5,7 @@ namespace QCod\Gamify\Traits;
 use QCod\Gamify\Classes\PointType;
 use QCod\Gamify\Events\ReputationChanged;
 use Illuminate\Support\Facades\Event;
+use QCod\Gamify\Models\Reputation;
 
 trait HasReputations
 {
@@ -50,7 +51,7 @@ trait HasReputations
      */
     public function reputations()
     {
-        return $this->hasMany(config('gamify.reputation_model'), 'payee_id');
+        return $this->hasMany(Reputation::class, 'payee_id');
     }
 
     /**
