@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use QCod\Gamify\LevelType;
+use QCod\Gamify\Classes\LevelType;
 
 class DummyClass extends LevelType
 {
