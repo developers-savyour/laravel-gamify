@@ -22,13 +22,14 @@ trait HasLevels
      *
      * @param $user
      */
-    public function syncBadges($user = null)
+    public function syncLevels($user = null)
     {
         $user = is_null($user) ? $this : $user;
         $levelIds = app('levels')->filter
             ->qualifier($user)
             ->map->getLevelId();
         $user->levels()->sync($levelIds);
+
         $user->badge_id =   $user->levels->last()->badge->id;
         $user->level_id =   $user->levels->last()->id;
         $user->save();

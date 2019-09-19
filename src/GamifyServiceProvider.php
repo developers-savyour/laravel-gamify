@@ -9,7 +9,8 @@ use Illuminate\Support\ServiceProvider;
 use QCod\Gamify\Console\MakeLevelCommand;
 use QCod\Gamify\Console\MakePointCommand;
 use QCod\Gamify\Events\ReputationChanged;
-use QCod\Gamify\Listeners\SyncBadges;
+use QCod\Gamify\Listeners\SyncLevels;
+
 
 class GamifyServiceProvider extends ServiceProvider
 {
@@ -45,7 +46,7 @@ class GamifyServiceProvider extends ServiceProvider
         }
 
         // register event listener
-        Event::listen(ReputationChanged::class, SyncBadges::class);
+        Event::listen(ReputationChanged::class, SyncLevels::class);
     }
 
     /**

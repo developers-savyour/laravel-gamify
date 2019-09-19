@@ -4,7 +4,7 @@ namespace QCod\Gamify\Listeners;
 
 use QCod\Gamify\Events\ReputationChanged;
 
-class SyncBadges
+class SyncLevels
 {
     /**
      * Handle the event.
@@ -14,6 +14,6 @@ class SyncBadges
      */
     public function handle(ReputationChanged $event)
     {
-        $event->user->syncBadges();
+        $event->user->syncLevels();
     }
 }
