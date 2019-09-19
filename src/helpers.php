@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Badge;
-use App\Models\ReputationPoint;
+
 use QCod\Gamify\Classes\PointType;
+use QCod\Gamify\Models\Badge;
 use QCod\Gamify\Models\LevelQualifier;
+use QCod\Gamify\Models\ReputationPoint;
 
 
 if ( ! function_exists('getBadgeIdByName')) {
