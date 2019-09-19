@@ -2,6 +2,7 @@
 
 namespace QCod\Gamify\Traits;
 
+use QCod\Gamify\Classes\PointType;
 use QCod\Gamify\Events\ReputationChanged;
 use Illuminate\Support\Facades\Event;
 
