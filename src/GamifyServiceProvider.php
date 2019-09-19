@@ -4,11 +4,11 @@ namespace QCod\Gamify;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
-use QCod\Gamify\Listeners\SyncLevels;
 use Illuminate\Support\ServiceProvider;
 use QCod\Gamify\Console\MakeLevelCommand;
 use QCod\Gamify\Console\MakePointCommand;
 use QCod\Gamify\Events\ReputationChanged;
+use QCod\Gamify\Listeners\SyncBadges;
 
 class GamifyServiceProvider extends ServiceProvider
 {
@@ -44,7 +44,7 @@ class GamifyServiceProvider extends ServiceProvider
         }
 
         // register event listener
-        Event::listen(ReputationChanged::class, SyncLevels::class);
+        Event::listen(ReputationChanged::class, SyncBadges::class);
     }
 
     /**
