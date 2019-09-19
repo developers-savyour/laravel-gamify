@@ -48,6 +48,7 @@ if (!function_exists('getLevelQualifier')) {
     {
         $qualifier  =   LevelQualifier::where('class_name',$className)->first();
         $qualifier  =   !empty($qualifier) ? $qualifier->qualifying_points : 5000000;
+        return $qualifier;
     }
 }
 
