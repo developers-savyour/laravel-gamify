@@ -22,7 +22,7 @@ trait HasLevels
      *
      * @param $user
      */
-    public function syncLevels($user = null)
+    public function syncBadges($user = null)
     {
         $user = is_null($user) ? $this : $user;
         $levelIds = app('levels')->filter
