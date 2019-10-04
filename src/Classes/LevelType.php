@@ -22,6 +22,8 @@ abstract class LevelType
         $this->model = $this->storeLevel();
     }
 
+
+
     /**
      * Check if user qualifies for this badge
      *
@@ -103,6 +105,18 @@ abstract class LevelType
     }
 
     /**
+     * Get the default order if not provided
+     *
+     * @return integer
+     */
+    protected function getDefaultLevelOrder()
+    {
+        return config('gamify.default_level_order');
+    }
+
+
+
+    /**
      * Get the default icon if not provided
      *
      * @return string
@@ -129,7 +143,8 @@ abstract class LevelType
             ->forceFill([
                 'badge_id' => $this->getBadge(),
                 'description' => $this->getDescription(),
-                'icon' => $this->getIcon()
+                'icon' => $this->getIcon(),
+                'order'=>  $this->getOrder()
             ]);
 
         $level->save();

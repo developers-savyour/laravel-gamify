@@ -32,5 +32,6 @@ return [
         '2' =>  'Hobbyist',
         '3' =>  'Pro',
         '4' =>  'Connoisseur',
-    ]
+    ],
+    'default_level_order'   =>  500000
 ];

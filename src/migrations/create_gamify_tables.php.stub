@@ -39,6 +39,7 @@ class CreateGamifyTables extends Migration
                    $table->string('name');
                    $table->string('description')->nullable();
                    $table->string('icon')->nullable();
+                   $table->unsignedInteger('order')->default('500000');
                    $table->tinyInteger('badge_id')->default(0);
                    $table->timestamps();
                });
@@ -58,11 +59,12 @@ class CreateGamifyTables extends Migration
                     $table->boolean('is_active')->default(0);
                     $table->timestamps();
                });
+
                Schema::create('level_qualifiers', function (Blueprint $table) {
                     $table->bigIncrements('id');
                     $table->string('class_name');
-                    $table->bigInteger('
-                    ')->default('5000000');
+                    $table->bigInteger('qualifying_points')->default('500000');
+                    $table->unsignedInteger('order')->default('500000');
                     $table->timestamps();
                });
     }

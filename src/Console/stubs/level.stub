@@ -13,6 +13,8 @@ class DummyClass extends LevelType
      */
     protected $description = '';
 
+    protected $order;
+
     /**
      * Check is user qualifies for level
      *
@@ -22,11 +24,26 @@ class DummyClass extends LevelType
     public function qualifier($user)
     {
         return $user->getPoints() >= getLevelQualifier('DummyClass');
-
     }
 
     public function getBadge()
     {
         return getBadgeIdByName(config('gamify.badges.1'));
     }
+
+    /**
+         * Get order of Level
+         *
+         * @return integer
+    */
+    public function getOrder()
+    {
+        $level  =   getLevelOrder('DummyClass');
+
+        if(empty($level))
+            $level  =   $this->getDefaultLevelOrder();
+
+        return $level;
+    }
+
 }

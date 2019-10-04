@@ -17,6 +17,7 @@ if ( ! function_exists('getBadgeIdByName')) {
 }
 
 
+
 if (!function_exists('givePoint')) {
 
     /**
@@ -51,6 +52,16 @@ if (!function_exists('getLevelQualifier')) {
         return $qualifier;
     }
 }
+
+if (!function_exists('getLevelOrder')) {
+    function getLevelOrder($className)
+    {
+        $level  =   LevelQualifier::where('class_name',$className)->first();
+        $level  =   !empty($level) ? $level->order : config('gamify.default_level_order');
+        return $level;
+    }
+}
+
 
 if (!function_exists('undoPoint')) {
 
