@@ -12,7 +12,7 @@ if ( ! function_exists('getBadgeIdByName')) {
     {
         $badge  =   Badge::where('name', $name)->active()->first();
 
-        return (!empty($badge))    ?   $badge->id  :   config('badge_default_level');
+        return (!empty($badge))    ?   $badge->id  :   config('gamify.badge_default_level');
     }
 }
 

@@ -30,8 +30,16 @@ trait HasLevels
             ->map->getLevelId();
         $user->levels()->sync($levelIds);
 
-        $user->badge_id =   $user->levels->last()->badge->id;
-        $user->level_id =   $user->levels->last()->id;
+        if(!empty($user->levels->last()->badge))
+        {
+            $user->badge_id =   $user->levels->last()->badge->id;
+        }
+
+        if($user->levels->last()->id)
+        {
+            $user->level_id =   $user->levels->last()->id;
+        }
+
         $user->save();
     }
 }

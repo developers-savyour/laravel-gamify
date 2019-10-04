@@ -39,8 +39,8 @@ class CreateGamifyTables extends Migration
                    $table->string('name');
                    $table->string('description')->nullable();
                    $table->string('icon')->nullable();
-                   $table->unsignedInteger('order')->default('500000');
-                   $table->tinyInteger('badge_id')->default(0);
+                   $table->unsignedInteger('order')->nullable()->default('500000');
+                   $table->tinyInteger('badge_id')->nullable()->default(0);
                    $table->timestamps();
                });
 
@@ -64,7 +64,7 @@ class CreateGamifyTables extends Migration
                     $table->bigIncrements('id');
                     $table->string('class_name');
                     $table->bigInteger('qualifying_points')->default('500000');
-                    $table->unsignedInteger('order')->default('500000');
+                    $table->unsignedInteger('order')->nullable()->default('500000');
                     $table->timestamps();
                });
     }
